@@ -1,10 +1,10 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-path="https://raw.github.com/mahongquan/OpenBird/master/"
+reppath="https://raw.github.com/mahongquan/OpenBird/master/"
 def savefile(pathf):
-    print path+pathf
-    res=requests.get(path+pathf)#"Classes/AppDelegate.h")
+    print reppath+pathf
+    res=requests.get(reppath+pathf)#"Classes/AppDelegate.h")
     ps=pathf.split("/")
     p="/".join(ps[:-1])
     if os.path.exists(p):
@@ -18,7 +18,7 @@ def savefile(pathf):
 # res=requests.get("https://raw.github.com/mahongquan/OpenBird/master/Classes/AppDelegate.h")
 # open("AppDelegate.h","w").write(res.content)
 def getpath(path):
-    res=requests.get("https://github.com/mahongquan/OpenBird/tree/master/"+path)
+    res=requests.get(reppath+path)
     #open("content.html","w").write(res.content)
     soup = BeautifulSoup(res.content)
     rs=soup.tbody.find_all('tr')
