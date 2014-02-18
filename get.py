@@ -1,21 +1,25 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-repname="mahongquan/OpenBird"
+repname="mahongquan/github-web-file-download"
 reppath="https://raw.github.com/"+repname+"/master/"
+outputpath="."
 def getfile(pathf):
     print "get file:"+pathf
     res=requests.get(reppath+pathf)#"Classes/AppDelegate.h")
     ps=pathf.split("/")
     p="/".join(ps[:-1])
-    if p=="":
-        p="."
-    else:
-        if not os.path.exists(p):
-            os.makedirs(p)
+    p=outputpath+"/"+p
+    if not os.path.exists(p):
+        os.makedirs(p)
     open(p+"/"+ps[-1],"w").write(res.content)
 def getpath(path):
-    res=requests.get(reppath+path)
+    print "getpath:"+path
+    if path=="":
+        path="https://github.com/"+repname
+        res=requests.get(path)
+    else:
+        res=requests.get(reppath+path)
     soup = BeautifulSoup(res.content)
     rs=soup.tbody.find_all('tr')
     fs=[]
@@ -42,11 +46,19 @@ def getpath(path):
 def setrepname(nm):
 	global repname
 	global reppath
+	global outputpath
 	repname=nm
+	outputpath=nm.split("/")[1]
 	reppath="https://raw.github.com/"+repname+"/master/"
 def main():
+    print "Attention! New folder will be created in current path,download files  will be saved there,continue y/n?"
+    input=raw_input()
+    if input.lower()=="y":
+        pass
+    else:
+        return
     setrepname("mahongquan/github-web-file-download")
-    getfile("get.py")
+    getpath("")#all
 if __name__=="__main__":
     main()
 
