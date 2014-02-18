@@ -1,25 +1,21 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-reppath="https://raw.github.com/mahongquan/OpenBird/master/"
-def savefile(pathf):
-    print reppath+pathf
+repname="mahongquan/OpenBird"
+reppath="https://raw.github.com/"+repname+"/master/"
+def getfile(pathf):
+    print "get file:"+pathf
     res=requests.get(reppath+pathf)#"Classes/AppDelegate.h")
     ps=pathf.split("/")
     p="/".join(ps[:-1])
-    if os.path.exists(p):
-        pass
+    if p=="":
+        p="."
     else:
-        os.makedirs(p)
+        if not os.path.exists(p):
+            os.makedirs(p)
     open(p+"/"+ps[-1],"w").write(res.content)
-    
-# files=""
-
-# res=requests.get("https://raw.github.com/mahongquan/OpenBird/master/Classes/AppDelegate.h")
-# open("AppDelegate.h","w").write(res.content)
 def getpath(path):
     res=requests.get(reppath+path)
-    #open("content.html","w").write(res.content)
     soup = BeautifulSoup(res.content)
     rs=soup.tbody.find_all('tr')
     fs=[]
@@ -40,14 +36,19 @@ def getpath(path):
     for f in fs:
         print f
         ps=f.split("/")
-        savefile("/".join(ps[5:]))
+        getfile("/".join(ps[5:]))
     for p in paths:
         getpath(p)
+def setrepname(nm):
+	global repname
+	global reppath
+	repname=nm
+	reppath="https://raw.github.com/"+repname+"/master/"
 def main():
-    getpath("proj.android/src")
-#savefile("Resources/res/sfx_point.ogg")
-#savefile("proj.ios_mac/FlappyBird.xcodeproj/mac/")
-main()
+    setrepname("mahongquan/github-web-file-download")
+    getfile("get.py")
+if __name__=="__main__":
+    main()
 
 
 
