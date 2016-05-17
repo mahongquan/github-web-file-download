@@ -6,7 +6,8 @@ reppath="https://raw.github.com/"+repname+"/master/"
 outputpath="."
 def getfile(pathf):
     print "get file:"+pathf
-    reppath="https://raw.githubusercontent.com/"+repname+"/master/"
+    reppath="https://github.com/"+repname+"/tree/master/"
+    print(reppath)
     #print reppath+pathf
     #raw_input("pause")
     res=requests.get(reppath+pathf)#"Classes/AppDelegate.h")
@@ -24,37 +25,36 @@ def getpath(path):
     else:
         print reppath+path
         res=requests.get(reppath+path)
-    # print res
-    # print dir(res)
-    # f=open("res.html","w")
-    # f.write(res.content)
-    # f.close()
-    # raw_input()
     soup = BeautifulSoup(res.content)
-    #soup = BeautifulSoup(open("res.html","r").read())
     tbs=soup.find_all('table')
+    #print(tbs)
     t=tbs[0].tbody
     rs=t.find_all('tr')
     fs=[]
     paths=[]
     for r in rs:
         cs=r.find_all('td')
-        cls=cs[0].span['class']
-        print "class="+str(cls)
-        if cls==None:
-            pass
-        elif cls[1]==u"octicon-file-directory":
-            print "ispath"
-            f=cs[1].a['href']
-            ps=f.split("/")
-            childpath="/".join(ps[5:])
-            print childpath
-            paths.append(childpath)
-        elif cls[1]=="octicon-alert":
-            pass
-        else:
-            print "is file"
-            fs.append(cs[1].a['href'])
+        #print(cs)
+        #print(cs[0])
+        print(cs[0].svg)
+        print(cs[0])
+        if cs[0].svg!=None:
+            cls=cs[0].svg['class']
+            print "class="+str(cls)
+            if cls==None:
+                pass
+            elif cls[1]==u"octicon-file-directory":
+                print "ispath"
+                f=cs[1].a['href']
+                ps=f.split("/")
+                childpath="/".join(ps[5:])
+                print childpath
+                paths.append(childpath)
+            elif cls[1]=="octicon-alert":
+                pass
+            else:
+                print "is file"
+                fs.append(cs[1].a['href'])
     for f in fs:
         print f
         ps=f.split("/")
@@ -69,14 +69,8 @@ def setrepname(nm):
 	outputpath=nm.split("/")[1]
 	reppath="https://github.com/"+repname+"/tree/master/"
 def main():
-    #print "Attention! New folder will be created in current path,download files  will be saved there,continue y/n?"
-    #input=raw_input()
-    #if input.lower()=="y":
-    #    pass
-    #else:
-    #    return
-    setrepname("dkstar88/lemonade-jack")
-    getpath("Classes")#all
+    setrepname("sshwsfc/xadmin")
+    getpath("demo_app")#all
     #getpath("Resources")#all
 if __name__=="__main__":
     main()
