@@ -6,7 +6,7 @@ reppath="https://raw.github.com/"+repname+"/master/"
 outputpath="."
 def getfile(pathf):
     print "get file:"+pathf
-    reppath="https://github.com/"+repname+"/tree/master/"
+    reppath="https://raw.githubusercontent.com/"+repname+"/master/"
     print(reppath)
     #print reppath+pathf
     #raw_input("pause")
