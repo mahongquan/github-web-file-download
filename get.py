@@ -5,7 +5,7 @@ repname="mahongquan/github-web-file-download"
 reppath="https://raw.github.com/"+repname+"/master/"
 outputpath="."
 def getfile(pathf):
-    print "get file:"+pathf
+    print("get file:"+pathf)
     reppath="https://raw.githubusercontent.com/"+repname+"/master/"
     print(reppath)
     #print reppath+pathf
@@ -16,14 +16,14 @@ def getfile(pathf):
     p=outputpath+"/"+p
     if not os.path.exists(p):
         os.makedirs(p)
-    open(p+"/"+ps[-1],"w").write(res.content)
+    open(p+"/"+ps[-1],"wb").write(res.content)
 def getpath(path):
-    print "getpath:"+path
+    print("getpath:"+path)
     if path=="":
         path="https://github.com/"+repname
         res=requests.get(path)
     else:
-        print reppath+path
+        print(reppath+path)
         res=requests.get(reppath+path)
     soup = BeautifulSoup(res.content)
     tbs=soup.find_all('table')
@@ -40,23 +40,23 @@ def getpath(path):
         print(cs[0])
         if cs[0].svg!=None:
             cls=cs[0].svg['class']
-            print "class="+str(cls)
+            print("class="+str(cls))
             if cls==None:
                 pass
             elif cls[1]==u"octicon-file-directory":
-                print "ispath"
+                print("ispath")
                 f=cs[1].a['href']
                 ps=f.split("/")
                 childpath="/".join(ps[5:])
-                print childpath
+                print(childpath)
                 paths.append(childpath)
             elif cls[1]=="octicon-alert":
                 pass
             else:
-                print "is file"
+                print("is file")
                 fs.append(cs[1].a['href'])
     for f in fs:
-        print f
+        print(f)
         ps=f.split("/")
         getfile("/".join(ps[5:]))
     for p in paths:
@@ -69,8 +69,8 @@ def setrepname(nm):
 	outputpath=nm.split("/")[1]
 	reppath="https://github.com/"+repname+"/tree/master/"
 def main():
-    setrepname("sshwsfc/xadmin")
-    getpath("demo_app")#all
+    setrepname("facebook/flux")
+    getpath("examples")#all
     #getpath("Resources")#all
 if __name__=="__main__":
     main()
