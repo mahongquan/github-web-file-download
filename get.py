@@ -6,7 +6,7 @@ reppath="https://raw.github.com/"+repname+"/master/"
 outputpath="."
 def getfile(pathf):
     print("get file:"+pathf)
-    reppath="https://raw.githubusercontent.com/"+repname+"/master/"
+    reppath="https://raw.githubusercontent.com/"+repname+"/v4-dev/"
     print(reppath)
     #print reppath+pathf
     #raw_input("pause")
@@ -25,9 +25,10 @@ def getpath(path):
     else:
         print(reppath+path)
         res=requests.get(reppath+path)
+    print(res.content)
     soup = BeautifulSoup(res.content)
     tbs=soup.find_all('table')
-    #print(tbs)
+    print(tbs)
     t=tbs[0].tbody
     rs=t.find_all('tr')
     fs=[]
@@ -67,25 +68,12 @@ def setrepname(nm):
 	global outputpath
 	repname=nm
 	outputpath=nm.split("/")[1]
-	reppath="https://github.com/"+repname+"/tree/master/"
+	reppath="https://github.com/"+repname+"/tree/v4-dev/"
 def main():
-    setrepname("facebook/flux")
-    getpath("examples")#all
+    setrepname("twbs/bootstrap")
+    #getpath("js/src")#all
+    #getpath("assets/js/vendor")#assets/js/vendor
+    getpath("assets/js/src")#assets/js/vendor
     #getpath("Resources")#all
 if __name__=="__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
