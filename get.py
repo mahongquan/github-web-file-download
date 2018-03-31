@@ -6,7 +6,7 @@ reppath="https://raw.github.com/"+repname+"/master/"
 outputpath="."
 def getfile(pathf):
     print("get file:"+pathf)
-    reppath="https://raw.githubusercontent.com/"+repname+"/v4-dev/"
+    reppath="https://raw.githubusercontent.com/"+repname+"/master/"
     print(reppath)
     #print reppath+pathf
     #raw_input("pause")
@@ -20,13 +20,13 @@ def getfile(pathf):
 def getpath(path):
     print("getpath:"+path)
     if path=="":
-        path="https://github.com/"+repname
+        path="https://github.com/tree/master/"+repname
         res=requests.get(path)
     else:
         print(reppath+path)
         res=requests.get(reppath+path)
     print(res.content)
-    soup = BeautifulSoup(res.content)
+    soup = BeautifulSoup(res.content,"html.parser")
     tbs=soup.find_all('table')
     print(tbs)
     t=tbs[0].tbody
@@ -68,12 +68,12 @@ def setrepname(nm):
 	global outputpath
 	repname=nm
 	outputpath=nm.split("/")[1]
-	reppath="https://github.com/"+repname+"/tree/v4-dev/"
+	reppath="https://github.com/"+repname+"/tree/master/"
 def main():
-    setrepname("twbs/bootstrap")
+    setrepname("storybooks/storybook")
     #getpath("js/src")#all
     #getpath("assets/js/vendor")#assets/js/vendor
-    getpath("assets/js/src")#assets/js/vendor
+    getpath("examples/official-storybook")#assets/js/vendor
     #getpath("Resources")#all
 if __name__=="__main__":
     main()
