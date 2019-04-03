@@ -1,12 +1,13 @@
 import requests
 from bs4 import BeautifulSoup
 import os
+tag="/77b493c9ce9fb015a88995658b11d95e28f1e68e/"
 repname="mahongquan/github-web-file-download"
-reppath="https://raw.github.com/"+repname+"/master/"
+reppath="https://raw.github.com/"+repname+tag
 outputpath="."
 def getfile(pathf):
     print("get file:"+pathf)
-    reppath="https://raw.githubusercontent.com/"+repname+"/master/"
+    reppath="https://raw.githubusercontent.com/"+repname+tag
     print(reppath)
     #print reppath+pathf
     #raw_input("pause")
@@ -20,7 +21,7 @@ def getfile(pathf):
 def getpath(path):
     print("getpath:"+path)
     if path=="":
-        path="https://github.com/tree/master/"+repname
+        path="https://github.com/tree"+tag+repname
         res=requests.get(path)
     else:
         print(reppath+path)
@@ -68,12 +69,12 @@ def setrepname(nm):
 	global outputpath
 	repname=nm
 	outputpath=nm.split("/")[1]
-	reppath="https://github.com/"+repname+"/tree/master/"
+	reppath="https://github.com/"+repname+"/tree"+tag
 def main():
-    setrepname("storybooks/storybook")
+    setrepname("JoshuaKGoldberg/Old-Deleted-FullScreenMario")
     #getpath("js/src")#all
     #getpath("assets/js/vendor")#assets/js/vendor
-    getpath("examples/official-storybook")#assets/js/vendor
+    getpath("Maps")#assets/js/vendor
     #getpath("Resources")#all
 if __name__=="__main__":
     main()
